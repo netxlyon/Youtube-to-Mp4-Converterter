@@ -1,0 +1,37 @@
+import tkinter as tk
+from pytube import YouTube
+
+def download_video():
+    url = entry.get()
+    vid = YouTube(url)
+    
+    # Display video information
+    print("Video Title:")
+    print(vid.title)
+    print("Video Thumbnail Link:")
+    print(vid.thumbnail_url)
+    print("Video Description (if any):")
+    print(vid.description)
+    
+    vid = vid.streams.get_highest_resolution()
+    vid.download(output_path="/Users/netxl/Downloads")
+    print("Finished!!!")
+    status_label.config(text="Downloaded to /Users/netxl/Downloads")
+
+app = tk.Tk()
+app.title("Lyons Video Downloader")
+
+
+label = tk.Label(app, text="Enter YouTube Video URL:")
+label.pack()
+
+download_button = tk.Button(app, text="Download", command=download_video)
+download_button.pack(pady=10)
+
+entry = tk.Entry(app, width=40)
+entry.pack()
+
+status_label = tk.Label(app, text="")
+status_label.pack()
+
+app.mainloop()
